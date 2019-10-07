@@ -1,6 +1,7 @@
 package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.v2018_2.*
+import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.ScriptBuildStep
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.dockerCommand
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2018_2.ui.*
@@ -43,7 +44,20 @@ changeBuildType(RelativeId("Build")) {
                 param("dockerImage.platform", "linux")
             }
         }
-        items.removeAt(2)
-        items.removeAt(2)
+        insert(2) {
+            script {
+                name = "test"
+                scriptContent = """
+                    #!/bin/ash
+                    
+                    echo hej
+                """.trimIndent()
+                dockerImage = "alpine:latest"
+                dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
+                dockerPull = true
+            }
+        }
+        items.removeAt(3)
+        items.removeAt(3)
     }
 }
