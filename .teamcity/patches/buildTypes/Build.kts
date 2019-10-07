@@ -30,5 +30,6 @@ changeBuildType(RelativeId("Build")) {
                 """.trimIndent()
             }
         }
+        items.removeAt(2)
     }
 }
