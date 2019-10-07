@@ -21,7 +21,7 @@ changeBuildType(RelativeId("Build")) {
         }
     }
     steps {
-        insert(2) {
+        insert(0) {
             script {
                 scriptContent = """
                     docker run --rm --volume ${'$'}(pwd):/opt/build --workdir /opt/build rust:slim cargo build --release
