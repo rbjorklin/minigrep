@@ -6,6 +6,7 @@ ADD Cargo.toml /opt/build/Cargo.toml
 ADD src/ /opt/build/src
 
 RUN cargo build --release
+RUN cargo test
 
 # Resulting container starts here
 FROM debian:buster-slim
