@@ -2,7 +2,6 @@ package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.v2018_2.*
 import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.dockerCommand
-import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2018_2.ui.*
 
 /*
@@ -23,15 +22,6 @@ changeBuildType(RelativeId("Build")) {
     }
     steps {
         insert(0) {
-            script {
-                scriptContent = """
-                    docker run --rm --volume ${'$'}(pwd):/opt/build --workdir /opt/build rust:slim cargo build --release
-                    
-                    docker run --rm --volume ${'$'}(pwd):/opt/build --workdir /opt/build rust:slim cargo test
-                """.trimIndent()
-            }
-        }
-        insert(1) {
             dockerCommand {
                 name = "Build container image"
                 commandType = build {
@@ -43,7 +33,7 @@ changeBuildType(RelativeId("Build")) {
                 param("dockerImage.platform", "linux")
             }
         }
-        items.removeAt(2)
-        items.removeAt(2)
+        items.removeAt(1)
+        items.removeAt(1)
     }
 }
